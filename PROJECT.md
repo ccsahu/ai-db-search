@@ -1,4 +1,4 @@
-# Smart DB Search - End-to-End Architecture
+# AI DB Search - End-to-End Architecture
 
 This is a **Spring Boot RAG (Retrieval-Augmented Generation) application** that enables natural language querying of a database using AI.
 
