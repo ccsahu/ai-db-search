@@ -1,0 +1,42 @@
+spring:
+
+  datasource:
+    url: jdbc:hsqldb:mem:testdb
+    driverClassName: org.hsqldb.jdbcDriver
+    username: sa
+    password:
+    schema: classpath:DB/schema.sql
+  sql:
+    init:
+      mode: always # Ensures scripts run even if DB isn't detected as embedded
+      schema-locations: classpath:db/schema.sql
+      data-locations: classpath:db/data.sql
+
+  ai:
+
+    ollama:
+      base-url: http://localhost:11434
+
+      chat:
+        model: llama3
+
+      embedding:
+        model: nomic-embed-text
+
+    vectorstore:
+      chroma:
+        client:
+          host: http://localhost
+          port: 8000
+        collection-name: db-schema-v1
+        initialize-schema: true
+        tenant-name: default_tenant
+        database-name: default_database
+
+logging:
+  level:
+    # Use these for Spring Boot 3 database initialization logs
+    org.springframework.jdbc.datasource.init: DEBUG
+    org.springframework.orm.jpa: DEBUG
+    # Optional: See actual SQL statements from Hibernate
+    org.hibernate.SQL: DEBUG
