@@ -287,7 +287,7 @@ Which city has finance employees?
 # Project Structure
 
 ```
-rag-database-ai
+ai-db-search
 
 config
 schema
