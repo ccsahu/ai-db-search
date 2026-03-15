@@ -31,6 +31,8 @@ Stack:
 - Chroma Vector Database (Docker)
 - HSQLDB (in-memory database)
 
+Refer PROJECT.md for full details of the project structure
+
 ---
 
 # Step 1: Install Ollama
@@ -39,7 +41,10 @@ Download:
 
 https://ollama.com/download
 
-or use powershell command: irm https://ollama.com/install.ps1 | iex
+or use powershell command: 
+```
+irm https://ollama.com/install.ps1 | iex
+```
 
 Verify installation:
 
@@ -113,36 +118,6 @@ spring-ai-ollama-spring-boot-starter
 spring-ai-chroma-store-spring-boot-starter
 spring-boot-starter-jdbc
 hsqldb
-```
-
----
-
-# Step 5: application.yml
-
-```
-spring:
-
- datasource:
-  url: jdbc:hsqldb:mem:testdb
-  driverClassName: org.hsqldb.jdbcDriver
-  username: sa
-  password:
-
- ai:
-
-  ollama:
-   base-url: http://localhost:11434
-
-   chat:
-    model: llama3
-
-   embedding:
-    model: nomic-embed-text
-
-  vectorstore:
-   chroma:
-    url: http://localhost:8000
-    collection-name: db-schema-v1
 ```
 
 ---
@@ -262,12 +237,21 @@ ollama serve
 docker run -p 8000:8000 -v ./chroma_data:/chroma/chroma chromadb/chroma
 ```
 
+Verify the db-schema-v1 collection or create otherwise:
+
+```
+curl.exe -X GET "http://localhost:8000/api/v2/tenants/default_tenant/databases/default_database/collections" -H "Content-Type: application/json"
+```
+
 3 Run Spring Boot application
 
-4 Embed schema once
+4 Ask questions using REST API
 
-5 Ask questions using REST API
+```
+http://localhost:8080/ai/ask?question=which employee earn more than 80000
+http://localhost:8080/ai/ask?question=which employee work in bangalore city
 
+```
 ---
 
 # Example Questions
@@ -280,6 +264,10 @@ Who earns more than 80000?
 List employee names.
 
 Which city has finance employees?
+
+employees having pending loan
+
+employees without any loan
 ```
 
 ---

@@ -15,16 +15,28 @@ public class SqlGeneratorService {
     public String generateSql(String schema, String question) {
 
         String prompt = """
-  You are a SQL generator.
-        You must follow these rules strictly:
-            1. Use ONLY tables and columns present in the schema
-            2. Do NOT invent table names
-            3. Do NOT pluralize table names
-            4. Return ONLY SQL
-            5. Refer the table schema while preparing sql
-            5. DO NOT mention other characters like Here is the SQL to retrieve. provide the sql which can be executed directly
+  You are a SQL generator. Generate a SQL query using ONLY the tables and columns listed below.
+       STRICT RULES:
+        1. Use ONLY table and column names listed in the schema.
+        2. NEVER invent new columns.
+        3. NEVER invent new tables.
+        4. NEVER pluralize table names.
+        5. Before returning SQL check:
+              - every column exists in schema
+              - every table exists in schema
+              If any column does not exist, correct it.
+        6. Return ONLY executable SQL. No explanations.
+        7. Use upper case for string comparision.
+        
+        CASE-INSENSITIVE STRING COMPARISON RULE:
+             For all string filters ALWAYS use:
+                 UPPER(column) = UPPER('value')
+               
+        VALID TABLES AND COLUMNS:
+             EMPLOYEE(ID, NAME, DEPARTMENT, SALARY CITY)
+             LOAN(LOAN_ID, EMPLOYEE_ID, AMOUNT, STATUS)
 
-  Database schema:
+  Schema context:
   %s
 
   Question:
