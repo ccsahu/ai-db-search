@@ -16,10 +16,8 @@ spring:
 
     ollama:
       base-url: http://localhost:11434
-
       chat:
         model: llama3
-
       embedding:
         model: nomic-embed-text
 
@@ -29,14 +27,6 @@ spring:
           host: http://localhost
           port: 8000
         collection-name: db-schema-v1
-        initialize-schema: true
+        #initialize-schema: true
         tenant-name: default_tenant
         database-name: default_database
-
-logging:
-  level:
-    # Use these for Spring Boot 3 database initialization logs
-    org.springframework.jdbc.datasource.init: DEBUG
-    org.springframework.orm.jpa: DEBUG
-    # Optional: See actual SQL statements from Hibernate
-    org.hibernate.SQL: DEBUG

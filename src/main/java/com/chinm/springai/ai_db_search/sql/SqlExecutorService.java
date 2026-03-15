@@ -20,7 +20,6 @@ public class SqlExecutorService {
     }
 
     public Optional<List<Map<String, Object>>> execute(String sql) {
-        logger.info("Executing SQL: {}", sql);
         validateAndFormatSql(sql);
         try {
             List<Map<String, Object>> result = jdbcTemplate.queryForList(sql);
@@ -34,9 +33,8 @@ public class SqlExecutorService {
     private void validateAndFormatSql(String sql) {
         sql = sql.trim();
         sql = sql.replace("\n", " ");
-        sql = sql.replaceAll("```sql\\s*", "");
-        sql = sql.replaceAll("```\\s*$", "");
-
+        sql = sql.replaceAll("^```(.*?)```$", "$1").trim();
+        logger.info("Executing SQL: {}", sql);
         if(!sql.toLowerCase().startsWith("select"))
             throw new RuntimeException("Only SELECT allowed");
     }
